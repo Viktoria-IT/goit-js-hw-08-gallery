@@ -70,8 +70,7 @@ const modalImg = document.querySelector(".lightbox__image");
 const modalContent = document.querySelector(".lightbox__image");
 const overlay = document.querySelector(".lightbox__overlay")
 const modalBtnClose = document.querySelector(".lightbox__button");
-const modalBtnRight = document.querySelector(".scroll-right");
-const modalBtnLeft = document.querySelector(".scroll-left");
+
 
 galleryContainer.addEventListener('click', modalOpen);
 galleryContainer.insertAdjacentHTML("beforeend", galleryCardMarkup(galleryItems));
@@ -120,6 +119,21 @@ function modalCloseByEsc(event) {
     }
 };
 
+// Очистка пути после закрытия модалки//
+
+function isOpen() {
+  const modalContent = document.querySelector('.lightbox__image');
+  modal.classList.remove('is-open');
+  modalContent.alt = '';
+  modalContent.src = '';
+}
+
+// const modalContent = document.querySelector('.lightbox__image');
+// modalContent.addEventListener('click', isOpen);
+
+overlay.addEventListener('click', isOpen);
+
+
 function modalCloseByOverlayClick(event) {
     if (event.currentTarget === event.target) {
         modalClose(event)      
@@ -134,4 +148,6 @@ function modalCloseByOverlayClick(event) {
      modalImg.src = galleryItems[imgIndex].original;
      modalImg.alt = galleryItems[imgIndex].description;
 
- };
+};
+ 
+
