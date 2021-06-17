@@ -67,7 +67,7 @@ const galleryItems = [
 const galleryContainer = document.querySelector(".js-gallery");
 const modal = document.querySelector(".js-lightbox");
 const modalImg = document.querySelector(".lightbox__image");
-const modalContent = document.querySelector(".lightbox__image");
+const modalContent = document.querySelector(".lightbox__content");
 const overlay = document.querySelector(".lightbox__overlay")
 const modalBtnClose = document.querySelector(".lightbox__button");
 
@@ -90,64 +90,82 @@ function galleryCardMarkup(img) {
 };
 
 function modalOpen(event) {
-    event.preventDefault();
-
-    if (event.target.nodeName !== "IMG") {
-        return
-    };
-    modal.classList.add("is-open");
+  event.preventDefault();
+  if (event.target.nodeName === "IMG") {
+    modal.classList.add('is-open');
     modalImg.src = event.target.dataset.source;
     modalImg.alt = event.target.alt;
-    overlay.addEventListener("click", modalCloseByOverlayClick);
-    document.addEventListener("keydown", modalCloseByEsc);
-    modalBtnClose.addEventListener('click', modalClose);
-     window.addEventListener("keydown", modalImgScrolling);
-     modalContent.addEventListener("click", modalImgScrolling);   
+  }
+    return
 };
+ 
+modalBtnClose.addEventListener('click', modalClose);
+
 
 function modalClose(event) {
-    modal.classList.remove("is-open");
-    overlay.removeEventListener("click", modalCloseByOverlayClick);
-    document.removeEventListener("keydown", modalCloseByEsc);
-    modalBtnClose.removeEventListener('click', modalClose);
-    window.removeEventListener("keydown", modalImgScrolling);
-};
-
-function modalCloseByEsc(event) {
-    if (event.code === "Escape") {
-        modalClose(event)        
-    }
-};
-
-// Очистка пути после закрытия модалки//
-
-function isOpen() {
-  const modalContent = document.querySelector('.lightbox__image');
   modal.classList.remove('is-open');
-  modalContent.alt = '';
-  modalContent.src = '';
-}
-
-// const modalContent = document.querySelector('.lightbox__image');
-// modalContent.addEventListener('click', isOpen);
-
-overlay.addEventListener('click', isOpen);
-
-
-function modalCloseByOverlayClick(event) {
-    if (event.currentTarget === event.target) {
-        modalClose(event)      
+  modalImg.removeAttribute("src");
+  modalImg.removeAttribute("alt");
     }
-};
+
+// function modalOpen(event) {
+//     event.preventDefault();
+
+//     if (event.target.nodeName !== "IMG") {
+//         return
+//     };
+//     modal.classList.add("is-open");
+//     modalImg.src = event.target.dataset.source;
+//     modalImg.alt = event.target.alt;
+//     overlay.addEventListener("click", modalCloseByOverlayClick);
+//     document.addEventListener("keydown", modalCloseByEsc);
+//     modalBtnClose.addEventListener('click', modalClose);
+//     window.addEventListener("keydown", modalImgScrolling);
+//     modalContent.addEventListener("click", modalImgScrolling);   
+// };
+
+// function modalClose(event) {
+//   modal.classList.remove("is-open");
+//   modalImg.removeAttribute("src");
+//   modalImg.removeAttribute("alt");
+//     overlay.removeEventListener("click", modalCloseByOverlayClick);
+//     document.removeEventListener("keydown", modalCloseByEsc);
+//     modalBtnClose.removeEventListener('click', modalClose);
+//     window.removeEventListener("keydown", modalImgScrolling);
+// };
+
+// function modalCloseByEsc(event) {
+//     if (event.code === "Escape") {
+//         modalClose(event)        
+//     }
+// };
+
+// // Очистка пути после закрытия модалки//
+
+// function isOpen() {
+//   const modalContent = document.querySelector('.lightbox__image');
+//   modal.classList.remove('is-open');
+//   modalContent.alt = '';
+//   modalContent.src = '';
+// }
+
+// overlay.addEventListener('click', isOpen);
 
 
- function modalImgScrolling(event) {
+// function modalCloseByOverlayClick(event) {
+//     if (event.currentTarget === event.target) {
+//         modalClose(event)      
+//     }
+// };
 
-     let imgIndex = galleryItems.findIndex(img => img.original === modalImg.src);
 
-     modalImg.src = galleryItems[imgIndex].original;
-     modalImg.alt = galleryItems[imgIndex].description;
+//  function modalImgScrolling(event) {
 
-};
+//      let imgIndex = galleryItems.findIndex(img => img.original === modalImg.src);
+
+//      modalImg.src = galleryItems[imgIndex].original;
+//      modalImg.alt = galleryItems[imgIndex].description;
+
+// };
  
 
